@@ -1,0 +1,31 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update repository index
+    yum:
+      update_cache: yes
+
+  - name: install apache package
+    yum:
+      name: httpd
+      state: latest
+
+  - name: enable and run apache
+    service:
+      name: httpd
+      enabled: true
+      state: started
+
+  - name: add php support for apache
+    yum:
+      name: php-fpm
+      state: latest
+
+  - name: enable php service for apache
+    service:
+      name: php-fpm
+      enabled: true
+      state: started
